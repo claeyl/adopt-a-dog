@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from backend.models.DogTags import DogTags
+from backend.models.DogFilters import DogFilters
 from backend.models.types import Gender, Size
 
 @dataclass
@@ -13,6 +13,6 @@ class Dog:
   size: Size
   weight: float
   adoption_fee: float
-  metadata: List[str]
+  tags: List[str]
   description: str
-  tags: DogTags
+  filters: DogFilters
