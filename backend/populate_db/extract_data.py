@@ -75,6 +75,8 @@ def construct_dog_filters(tags: List[str]) -> DogFilters:
         dog_filters.single_dog_household = True
       case "older children":
         dog_filters.can_live_with_children = "older"
+      case "children":
+        dog_filters.can_live_with_children = "any"
       case "dog friendly":
         dog_filters.friendly_with_dogs = Tribool.TRUE
       case "teenagers":
