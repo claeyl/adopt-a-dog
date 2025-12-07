@@ -1,0 +1,21 @@
+:root {
+  --color-primary: hsl(197, 100%, 42%);
+  --color-primary-dark: hsl(197, 100%, 31%);
+  --color-secondary: hsl(330, 79%, 60%);
+  --color-secondary-dark: hsl(337, 62%, 59%);
+  --color-surface-0: hsl(211, 59%, 7%);
+  --color-surface-100: hsl(218, 30%, 17%);
+  --color-surface-200: hsl(217, 14%, 25%);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  color: white;
+}
