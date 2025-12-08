@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from backend.models.dtos.ErrorResponse import ErrorResponse
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from backend.models.dtos.QueryRequest import QueryRequest
 from backend.models.dtos.DogResponseInfo import DogResponseInfo
 from backend.models.dtos.QueryResponse import QueryResponse
@@ -7,12 +7,26 @@ from backend.services.query_service import query_collection
 
 app = FastAPI()
 
+origins = [
+  "http://localhost:5173",
+]
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=origins,
+  allow_credentials=True,
+  allow_methods=["*"],
+  allow_headers=["*"],
+)
+
 @app.post("/query")
-def query_dog_collection(request: QueryRequest) -> QueryResponse | ErrorResponse:
+def query_dog_collection(request: QueryRequest) -> QueryResponse:
   try:
     response = query_collection(request.query)
 
     results = []
+    if not response.objects:
+      raise HTTPException(status_code=404, detail="No matching dogs found.")
     for obj in response.objects:
       results.append(
         DogResponseInfo(
@@ -29,7 +43,7 @@ def query_dog_collection(request: QueryRequest) -> QueryResponse | ErrorResponse
       ))
     return QueryResponse(results=results)
   except Exception as e:
-    return ErrorResponse(error=str(e))
+    raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
 def read_root():
