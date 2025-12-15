@@ -59,7 +59,7 @@ def construct_dog_filters(tags: List[str]) -> DogFilters:
         dog_filters.can_live_with_children = "none"
       case "calm home needed":
         dog_filters.calm_home_needed = True
-      case "behaviour training needed":
+      case "behavior training needed":
         dog_filters.behaviour_training_needed = True
       case "suitable for full-time workers":
         dog_filters.suitable_for_fulltime_workers = Tribool.TRUE
