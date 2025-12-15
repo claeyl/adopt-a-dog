@@ -168,7 +168,7 @@ def construct_json_filters_from_prompt(query: str) -> FilterExpression:
         "type": "simple_filter",
         "field": "suitable_for_fulltime_workers",
         "comparison_operator": "equal",
-        "value": true
+        "value": 1
       },
     ]
   }
