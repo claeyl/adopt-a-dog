@@ -198,7 +198,6 @@ def construct_json_filters_from_prompt(query: str) -> FilterExpression:
       model="Qwen/Qwen3-32B",
       temperature=0.2,
     )
-    logger.info(f"query sent: {query}")
   except InferenceTimeoutError as e:
     logger.error("Inference timed out")
     raise FilterConstructionError("Inference timed out") from e
