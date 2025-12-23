@@ -6,7 +6,7 @@ export interface DogResponse {
   breed: string
   size: string
   weight: number
-  adoptionFee: number
+  adoption_fee: number
   tags: string[]
   description: string
 }
