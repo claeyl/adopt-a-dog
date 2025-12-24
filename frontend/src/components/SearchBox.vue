@@ -2,6 +2,7 @@
   <div :class="{ focused: focused }">
     <textarea
       ref="textareaRef"
+      :maxlength="MAXIMUM_QUERY_LENGTH"
       :value="query"
       placeholder="What are you looking for?"
       :disabled="disabled"
@@ -31,6 +32,7 @@ import 'primeicons/primeicons.css'
 
 const MINIMUM_QUERY_LENGTH = 3
 const MAXIMUM_QUERY_LENGTH = 1000
+const ASCII_PRINTABLE_REGEX = /[^\x20-\x7E]/g
 
 const props = defineProps<{
   disabled: boolean
@@ -41,7 +43,7 @@ const emit = defineEmits<{
 }>()
 
 const query = defineModel<string>('query', { required: true })
-const error = defineModel<string>('error')
+const error = defineModel<string>('error', { required: true })
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 const focused = ref(false)
@@ -55,7 +57,7 @@ const adjustHeight = () => {
 
 // It's like a useEffect
 watch(
-  () => props.query,
+  () => query.value,
   async () => {
     await nextTick()
     adjustHeight()
@@ -64,7 +66,8 @@ watch(
 
 const handleInput = (e: Event) => {
   const value = (e.target as HTMLTextAreaElement).value
-  query.value = value
+  const sanitizedValue = value.replace(ASCII_PRINTABLE_REGEX, '')
+  query.value = sanitizedValue
   error.value = ''
 }
 
@@ -81,13 +84,11 @@ const handleSearchClick = () => {
 }
 
 const validateSearchInput = () => {
-  const trimmedQuery = props.query.trim()
+  const trimmedQuery = query.value.trim()
   if (trimmedQuery.length >= MINIMUM_QUERY_LENGTH && trimmedQuery.length <= MAXIMUM_QUERY_LENGTH) {
     emit('search')
   } else if (trimmedQuery.length < MINIMUM_QUERY_LENGTH) {
-    error.value = 'Query is too short'
-  } else if (trimmedQuery.length > MAXIMUM_QUERY_LENGTH) {
-    error.value = 'Query is too long'
+    error.value = 'A few more words will help us find the best match for you.'
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="card__header">
       <h3><TypewriterText :content="dog.name" /></h3>
       <a :href="`https://www.dogshome.org.au/our-dogs/${dog.id}`" target="_blank"
-        ><span>Learn more about me</span><i class="pi pi-external-link" style="margin: 0"></i
+        ><span>Learn more</span><i class="pi pi-external-link" style="margin: 0"></i
       ></a>
       <p><span class="card__header-label">gender: </span>{{ dog.gender }}</p>
       <p><span class="card__header-label">age: </span>{{ formatAge(dog.age) }}</p>
@@ -23,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import type { DogResponse } from '@/types/DogResponse'
 import TypewriterText from './TypewriterText.vue'
 const props = defineProps<{
   dog: DogResponse
