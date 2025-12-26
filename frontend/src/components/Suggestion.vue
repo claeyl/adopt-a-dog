@@ -24,7 +24,7 @@ defineEmits<{
 .suggestion-btn {
   border: 2px solid transparent;
   border-radius: var(--radius-pill);
-  padding: calc(0.5 * var(--space-base)) var(--space-2);
+  padding: calc(var(--space-base) * 0.5) var(--space-2);
 
   color: inherit;
   font-weight: 500;

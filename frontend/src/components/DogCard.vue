@@ -1,7 +1,7 @@
 <template>
   <section class="card">
     <div class="card__header">
-      <h3><TypewriterText :content="dog.name" /></h3>
+      <h2><TypewriterText :content="dog.name" /></h2>
       <a :href="`https://www.dogshome.org.au/our-dogs/${dog.id}`" target="_blank"
         ><span>Learn more</span><i class="pi pi-external-link" style="margin: 0"></i
       ></a>
@@ -42,13 +42,12 @@ function formatAge(age: number): string {
 
 <style scoped>
 .card {
-  border: solid 1px var(--color-surface-200);
-  border-radius: 1rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-2);
 
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
   max-width: 100%;
 }
 
@@ -57,10 +56,10 @@ function formatAge(age: number): string {
   grid-template-columns: 1fr;
   justify-items: start;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--space-1);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .card__header {
     grid-template-columns: repeat(2, max-content);
   }
@@ -70,25 +69,21 @@ function formatAge(age: number): string {
   font-weight: 600;
 }
 
-.card__header h3 {
-  font-size: 1.75rem;
-}
-
 .card__header a {
   text-decoration: none;
-  background-color: var(--color-secondary);
-  border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  color: inherit;
+  background-color: var(--clr-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-2);
+  color: var(--clr-font);
   transition: background-color 0.2s ease;
 
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-1);
 }
 
 .card__header a:hover {
-  background-color: var(--color-secondary-dark);
+  filter: brightness(85%);
 }
 
 .card__header p {
@@ -97,13 +92,20 @@ function formatAge(age: number): string {
 
 .card__tags {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-1);
   flex-wrap: wrap;
 }
 
 .card__tag {
-  background-color: var(--color-surface-100);
-  padding: 0.4rem 1rem;
-  border-radius: 9999px;
+  background-color: var(--clr-dark);
+  filter: opacity(75%);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+}
+
+.card__header,
+.card__footer {
+  color: var(--clr-dark);
+  font-size: var(--font-p-lg);
 }
 </style>

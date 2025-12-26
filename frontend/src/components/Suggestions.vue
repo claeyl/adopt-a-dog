@@ -17,8 +17,8 @@ const suggestions = [
   { suggestion: 'Good for first-time dog owners', color: 'var(--clr-orange)' },
   { suggestion: 'Compatible with cats', color: 'var(--clr-purple)' },
   { suggestion: 'Great with young children', color: 'var(--clr-green)' },
-  { suggestion: 'Okay being alone during work hours', color: 'var(--clr-pink)' },
-  { suggestion: 'Prefers to be the only dog', color: 'var(--clr-darkblue)' },
+  { suggestion: 'Prefers to be the only dog', color: 'var(--clr-pink)' },
+  { suggestion: 'Okay being alone during work hours', color: 'var(--clr-darkblue)' },
 ]
 defineEmits<{
   suggestionClick: [content: string]

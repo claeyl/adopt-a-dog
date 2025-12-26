@@ -4,10 +4,10 @@
   --clr-black: hsl(30, 14.29%, 5.49%);
   --clr-darkgrey: hsl(0, 0%, 15%);
 
-  --clr-orange: hsl(14.59, 90.24%, 59.8%);
+  --clr-orange: hsl(15, 58%, 47%);
   --clr-green: hsl(164.17, 45.57%, 30.98%);
   --clr-blue: hsl(225.6, 100%, 75.49%);
-  --clr-darkblue: hsl(229.12, 85.05%, 58.04%);
+  --clr-darkblue: hsl(229, 57%, 50%);
   --clr-purple: hsl(272, 48%, 47%);
   --clr-pink: hsl(338.18, 52.38%, 41.18%);
 
@@ -30,6 +30,7 @@
   --radius-md: 6px;
   --radius-lg: 12px;
   --radius-pill: 9999px;
+  --radius-circle: 50%;
 
   /* font */
   --font-main: 'Quicksand', system-ui, -apple-system, sans-serif;
@@ -52,6 +53,11 @@ body {
   line-height: 1.5;
   color: var(--clr-font);
   background-color: var(--clr-dark);
+  background-image:
+    radial-gradient(ellipse 200% 150% at 50% 100%, var(--clr-dark), transparent),
+    linear-gradient(transparent 0%, transparent 9.5%, var(--clr-dark) 60%),
+    linear-gradient(rgba(15, 13, 11, 0.65), rgba(15, 13, 11, 0.65)),
+    linear-gradient(to right, var(--clr-orange), var(--clr-green), var(--clr-purple));
 }
 
 h1,

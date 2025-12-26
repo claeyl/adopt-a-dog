@@ -2,12 +2,24 @@
   <div class="carousel" role="carousel">
     <div class="carousel__track">
       <div v-for="(dog, index) in dogs" :key="dog.id" v-show="index === currentIndex">
-        <DogCard :dog="dog" />
+        <DogCard
+          :dog="dog"
+          :style="{
+            backgroundImage: 'linear-gradient(hsla(15, 13%, 11%, 0.3), hsla(15, 13%, 11%, 0.3)',
+            backgroundColor: colors[index % colors.length],
+          }"
+        />
       </div>
     </div>
 
     <div class="carousel__nav-dots">
-      <button type="button" ariaLabel="previous" class="carousel__nav-btn" @click="onClickPrev">
+      <button
+        type="button"
+        ariaLabel="previous"
+        class="carousel__nav-btn"
+        :disabled="currentIndex === 0"
+        @click="onClickPrev"
+      >
         <i class="pi pi-caret-left"></i>
       </button>
 
@@ -20,7 +32,13 @@
         class="carousel__dot"
       ></button>
 
-      <button type="button" ariaLabel="next" class="carousel__nav-btn" @click="onClickNext">
+      <button
+        type="button"
+        ariaLabel="next"
+        class="carousel__nav-btn"
+        :disabled="currentIndex === dogs.length - 1"
+        @click="onClickNext"
+      >
         <i class="pi pi-caret-right"></i>
       </button>
     </div>
@@ -36,6 +54,13 @@ const props = defineProps<{
   dogs: DogResponse[]
 }>()
 
+const colors = [
+  'var(--clr-orange)',
+  'var(--clr-purple)',
+  'var(--clr-green)',
+  'var(--clr-pink)',
+  'var(--clr-darkblue)',
+]
 const currentIndex = ref(0)
 
 const onClickPrev = () => {
@@ -56,42 +81,44 @@ const onClickNext = () => {
   position: relative;
 }
 
-/* .carousel__track {
-  overflow: hidden;
-} */
-
 .carousel__nav-btn {
   border: none;
   cursor: pointer;
-  border-radius: 50%;
-  color: var(--color-primary);
+  border-radius: var(--radius-circle);
+  color: var(--clr-primary);
   background-color: transparent;
-  font-size: 1.25rem;
+  font-size: calc(var(--font-base) * 1.25);
   outline: none;
 }
 
 .carousel__nav-btn:hover {
-  color: var(--color-primary-dark);
+  filter: brightness(85%);
+}
+
+.carousel__nav-btn:disabled {
+  filter: opacity(40%);
 }
 
 .carousel__nav-dots {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
 }
 
 .carousel__dot {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   border: none;
-  background: var(--color-surface-200);
+  background: var(--clr-light);
+  filter: opacity(30%);
   cursor: pointer;
 }
 
 .carousel__dot.active {
-  background: white;
+  background-color: var(--clr-light);
+  filter: opacity(100%);
 }
 </style>

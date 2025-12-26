@@ -2,6 +2,7 @@
   <div :class="{ focused: focused }" role="searchbox">
     <textarea
       ref="textareaRef"
+      aria-label="searchbox-input"
       :maxlength="MAXIMUM_QUERY_LENGTH"
       :value="query"
       placeholder="What are you looking for?"
@@ -135,8 +136,8 @@ textarea:focus {
 button {
   background-color: var(--clr-primary);
   border: none;
-  border-radius: var(--radius-md);
-  padding: var(--space-base);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
   align-self: flex-end;
   cursor: pointer;
   color: var(--clr-darkgrey);
