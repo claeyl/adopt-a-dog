@@ -48,13 +48,22 @@ function formatAge(age: number): string {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  max-width: 100%;
 }
 
 .card__header {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: 1fr;
+  justify-items: start;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .card__header {
+    grid-template-columns: repeat(2, max-content);
+  }
 }
 
 .card__header-label {
