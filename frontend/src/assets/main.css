@@ -3,24 +3,17 @@
   --clr-offwhite: hsl(30, 25%, 92.16%);
   --clr-black: hsl(30, 14.29%, 5.49%);
   --clr-darkgrey: hsl(0, 0%, 17.65%);
+
   --clr-orange: hsl(14.59, 90.24%, 59.8%);
-  --clr-lightgreen: hsl(78.46, 86.67%, 85.29%);
-  --clr-green: hsl(164, 45.45%, 32.35%);
+  --clr-green: hsl(164.17, 45.57%, 30.98%);
   --clr-blue: hsl(225.6, 100%, 75.49%);
-  --clr-darkblue: hsl(229.09, 84.62%, 61.76%);
-  --clr-pastelpink: hsl(330, 100%, 94.12%);
-  --clr-pink: hsl(290, 85.71%, 86.27%);
-  --clr-darkpink: hsl(338.18, 52.38%, 41.18%);
+  --clr-darkblue: hsl(229.12, 85.05%, 58.04%);
+  --clr-purple: hsl(272, 48%, 47%);
+  --clr-pink: hsl(338.18, 52.38%, 41.18%);
 
   --clr-light: var(--clr-offwhite);
   --clr-dark: var(--clr-black);
-
   --clr-primary: var(--clr-blue);
-  --clr-primary-dark: var(--clr-darkblue);
-
-  --clr-secondary: var(--clr-pink);
-  --clr-secondary-dark: var(--clr-darkpink);
-
   --clr-font: var(--clr-offwhite);
 
   /* spacing */
@@ -35,12 +28,15 @@
   /* border radius */
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-lg: 12px;
   --radius-pill: 9999px;
 
   /* font */
   --font-main: 'Quicksand', system-ui, -apple-system, sans-serif;
   --font-base: 1rem;
+  --font-p-lg: 1.1rem;
+  --font-display-sm: 1.25rem;
+  --font-display-lg: 3.25rem;
 }
 
 *,
@@ -66,6 +62,10 @@ h5,
 h6,
 p {
   overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: balance;
 }
 
 input,
