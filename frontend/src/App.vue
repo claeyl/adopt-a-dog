@@ -21,7 +21,7 @@
         @search="handleQuerySubmit"
       />
       <Suggestions v-if="matchingDogs.length === 0" @suggestion-click="handleSuggestionClick" />
-      <div class="search__error" v-if="error.length > 0">{{ error }}</div>
+      <p class="search__error" v-if="error.length > 0">{{ error }}</p>
     </div>
   </main>
 </template>
@@ -48,6 +48,7 @@ const handleSuggestionClick = (content: string) => {
 
 const handleQuerySubmit = async () => {
   loading.value = true
+  error.value = ''
   matchingDogs.value = []
   matchingDogsSummary.value = query.value
   try {
@@ -56,11 +57,14 @@ const handleQuerySubmit = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: query.value }),
     })
-    const json = await response.json()
-    matchingDogs.value = json.results
-    // matchingDogs.value = data.results // for testing
+
+    const json_response = await response.json()
+    if (!response.ok) {
+      throw new Error(`${json_response.detail}`)
+    }
+
+    matchingDogs.value = json_response.results
   } catch (err) {
-    console.error(err)
     error.value = String(err)
   } finally {
     query.value = ''
@@ -74,7 +78,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  width: min(95%, max-content);
+  width: 95%;
 }
 
 @media (min-width: 640px) {
@@ -127,6 +131,7 @@ main {
   background-color: hsla(197, 100%, 31%, 30%);
 
   margin-bottom: 1rem;
+  font-style: italic;
 }
 
 .search {
