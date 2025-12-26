@@ -1,12 +1,46 @@
 :root {
-  --color-primary: hsl(197, 100%, 42%);
-  --color-primary-dark: hsl(197, 100%, 31%);
-  --color-secondary: hsl(330, 79%, 60%);
-  --color-secondary-dark: hsl(337, 62%, 59%);
-  --color-error: hsl(0, 63%, 46%);
-  --color-surface-0: hsl(211, 59%, 7%);
-  --color-surface-100: hsl(218, 30%, 17%);
-  --color-surface-200: hsl(217, 14%, 25%);
+  /* colors */
+  --clr-offwhite: hsl(30, 25%, 92.16%);
+  --clr-black: hsl(30, 14.29%, 5.49%);
+  --clr-darkgrey: hsl(0, 0%, 17.65%);
+  --clr-orange: hsl(14.59, 90.24%, 59.8%);
+  --clr-lightgreen: hsl(78.46, 86.67%, 85.29%);
+  --clr-green: hsl(164, 45.45%, 32.35%);
+  --clr-blue: hsl(225.6, 100%, 75.49%);
+  --clr-darkblue: hsl(229.09, 84.62%, 61.76%);
+  --clr-pastelpink: hsl(330, 100%, 94.12%);
+  --clr-pink: hsl(290, 85.71%, 86.27%);
+  --clr-darkpink: hsl(338.18, 52.38%, 41.18%);
+
+  --clr-light: var(--clr-offwhite);
+  --clr-dark: var(--clr-black);
+
+  --clr-primary: var(--clr-blue);
+  --clr-primary-dark: var(--clr-darkblue);
+
+  --clr-secondary: var(--clr-pink);
+  --clr-secondary-dark: var(--clr-darkpink);
+
+  --clr-font: var(--clr-offwhite);
+
+  /* spacing */
+  --space-base: 0.5rem;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+
+  /* border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 9999px;
+
+  /* font */
+  --font-main: 'Quicksand', system-ui, -apple-system, sans-serif;
+  --font-base: 1rem;
 }
 
 *,
@@ -18,9 +52,10 @@
 }
 
 body {
-  font-family: sans-serif;
-  color: white;
-  background-color: var(--color-surface-0);
+  font-family: var(--font-main);
+  line-height: 1.5;
+  color: var(--clr-font);
+  background-color: var(--clr-dark);
 }
 
 h1,
@@ -30,7 +65,13 @@ h4,
 h5,
 h6,
 p {
-  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+input,
+button,
+textarea {
+  font: inherit;
 }
 
 #app {
@@ -38,5 +79,5 @@ p {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding-block: 2rem;
+  padding-block: var(--space-4);
 }
