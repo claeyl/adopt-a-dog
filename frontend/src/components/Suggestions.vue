@@ -3,7 +3,8 @@
     <Suggestion
       v-for="(suggestion, i) in suggestions"
       :key="i"
-      :content="suggestion"
+      :content="suggestion.suggestion"
+      :color="suggestion.color"
       @click="$emit('suggestionClick', $event)"
     />
   </div>
@@ -13,13 +14,12 @@
 import Suggestion from './Suggestion.vue'
 
 const suggestions = [
-  'Good for first-time dog owners',
-  'Compatible with cats',
-  'Great with young children',
-  'Okay being alone during work hours',
-  'Prefers to be the only dog',
+  { suggestion: 'Good for first-time dog owners', color: 'var(--clr-orange)' },
+  { suggestion: 'Compatible with cats', color: 'var(--clr-purple)' },
+  { suggestion: 'Great with young children', color: 'var(--clr-green)' },
+  { suggestion: 'Okay being alone during work hours', color: 'var(--clr-pink)' },
+  { suggestion: 'Prefers to be the only dog', color: 'var(--clr-darkblue)' },
 ]
-
 defineEmits<{
   suggestionClick: [content: string]
 }>()
@@ -27,10 +27,9 @@ defineEmits<{
 
 <style scoped>
 .suggestions-container {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--space-2);
   justify-content: center;
 }
 </style>

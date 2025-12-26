@@ -1,12 +1,18 @@
 <template>
-  <button type="button" class="suggestion-btn" @click="$emit('click', content)">
-    {{ content }}
+  <button
+    type="button"
+    class="suggestion-btn"
+    :style="{ backgroundColor: color }"
+    @click="$emit('click', content)"
+  >
+    <span>{{ content }}</span>
   </button>
 </template>
 
 <script setup lang="ts">
 defineProps<{
   content: string
+  color: string
 }>()
 
 defineEmits<{
@@ -16,20 +22,23 @@ defineEmits<{
 
 <style scoped>
 .suggestion-btn {
-  background-color: var(--color-surface-200);
-  border: 1px solid transparent;
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  padding: calc(0.5 * var(--space-base)) var(--space-2);
+
   color: inherit;
+  font-weight: 500;
+  font-size: var(--font-p-lg);
+  text-wrap: balance;
   cursor: pointer;
+
   transition:
-    background-color 100ms ease-in,
-    border-color 100ms ease-in;
-  font-size: 1rem;
+    border-color 100ms ease-in,
+    filter 100ms ease-in;
 }
 
 .suggestion-btn:hover {
-  background-color: var(--color-surface-100);
-  border-color: var(--color-primary);
+  filter: brightness(85%);
+  border-color: var(--clr-light);
 }
 </style>

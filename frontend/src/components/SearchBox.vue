@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ focused: focused }">
+  <div :class="{ focused: focused }" role="searchbox">
     <textarea
       ref="textareaRef"
       :maxlength="MAXIMUM_QUERY_LENGTH"
@@ -21,7 +21,7 @@
       "
       @click="handleSearchClick"
     >
-      <i class="pi pi-arrow-up" style="color: white"></i>
+      <i class="pi pi-arrow-up"></i>
     </button>
   </div>
 </template>
@@ -32,7 +32,7 @@ import 'primeicons/primeicons.css'
 
 const MINIMUM_QUERY_LENGTH = 3
 const MAXIMUM_QUERY_LENGTH = 1000
-const ASCII_PRINTABLE_REGEX = /[^\x20-\x7E]/g
+const ASCII_PRINTABLE_REGEX = /[^\x20-\x7E\n\r\t]/g
 
 const props = defineProps<{
   disabled: boolean
@@ -55,7 +55,6 @@ const adjustHeight = () => {
   }
 }
 
-// It's like a useEffect
 watch(
   () => query.value,
   async () => {
@@ -97,41 +96,36 @@ const validateSearchInput = () => {
 div {
   display: flex;
   flex-direction: column;
-  align-items: start;
   justify-content: space-between;
-  gap: 1.5rem;
-  background-color: var(--color-surface-100);
-  width: 100%;
+  align-items: start;
+  gap: var(--space-2);
 
-  border-radius: 1rem;
-  padding: 1.25rem;
-  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+
+  background-color: var(--clr-darkgrey);
+  border: 2px solid transparent;
 
   transition: border-color 0.5s ease;
 }
 
 div.focused {
-  border-color: var(--color-primary);
-  border-width: 2px;
+  border-color: var(--clr-primary);
 }
 
 textarea {
   width: 100%;
-  font-size: 1.1rem;
   background-color: transparent;
   border: none;
   color: inherit;
-  font-family: sans-serif;
+  font-size: var(--font-p-lg);
   resize: none;
   overflow: hidden;
 }
 
-textarea:disabled {
-  color: hsla(0, 0%, 100%, 0.5);
-}
-
+textarea:disabled,
 textarea::placeholder {
-  color: hsla(0, 0%, 100%, 0.5);
+  filter: opacity(40%);
 }
 
 textarea:focus {
@@ -139,19 +133,26 @@ textarea:focus {
 }
 
 button {
-  background-color: var(--color-primary);
+  background-color: var(--clr-primary);
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-base);
   align-self: flex-end;
   cursor: pointer;
+  color: var(--clr-darkgrey);
+  aspect-ratio: 1 / 1;
 }
 
 button:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--clr-primary);
+  filter: brightness(85%);
 }
 
 button:disabled {
-  background-color: var(--color-surface-200);
+  filter: opacity(40%);
+}
+
+button > i {
+  font-weight: 800;
 }
 </style>
