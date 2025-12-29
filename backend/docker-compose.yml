@@ -16,17 +16,12 @@ services:
       - weaviate_data:/var/lib/weaviate
     restart: on-failure:0
     environment:
-      RERANKER_INFERENCE_API: 'http://reranker-transformers:8080'
-      COHERE_APIKEY: '${COHERE_APIKEY:-}'
+      COHERE_APIKEY: $COHERE_APIKEY
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
       DEFAULT_VECTORIZER_MODULE: 'text2vec-cohere'
-      ENABLE_MODULES: 'text2vec-cohere,reranker-cohere,reranker-transformers'
+      ENABLE_MODULES: 'text2vec-cohere,reranker-cohere'
       CLUSTER_HOSTNAME: 'node1'
-  reranker-transformers:
-    image: cr.weaviate.io/semitechnologies/reranker-transformers:cross-encoder-ms-marco-TinyBERT-L-2-v2
-    environment:
-      ENABLE_CUDA: '0'
 volumes:
   weaviate_data:
