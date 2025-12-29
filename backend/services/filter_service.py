@@ -275,5 +275,5 @@ def build_filter_expression(filter_expression: FilterExpression):
   
   if len(filters) == 0:
     return None
-  logger.info(f"filter produced: {filters}")
+  logger.debug(f"filter produced: {filters}")
   return Filter.all_of(filters)
