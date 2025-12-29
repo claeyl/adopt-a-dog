@@ -18,7 +18,7 @@ from backend.populate_db.format_data import (
 
 
 def parse_basic_dog_info(raw_text: str) -> tuple[int, str, Gender, int, str, Size, float, float]:
-  name, id, _, gender, age, breed, size_and_weight, fee, _, _, _ = raw_text.split("\n")
+  name, id, _, gender, age, breed, size_and_weight, _, fee, _, _, _ = raw_text.split("\n")
 
   id = format_id(id)
   gender = format_gender(gender)
