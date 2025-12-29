@@ -14,3 +14,4 @@ class DogResponseInfo:
   adoption_fee: float
   tags: List[str]
   description: str
+  generated_explanation: str
