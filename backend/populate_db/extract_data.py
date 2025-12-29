@@ -41,17 +41,7 @@ def parse_dog_tags(tag_images: ResultSet[Tag]) -> List[str]:
 
 def construct_dog_filters(tags: List[str]) -> DogFilters:
   # default values
-  dog_filters = DogFilters(
-    friendly_with_cats=Tribool.UNKNOWN,
-    friendly_with_dogs=Tribool.UNKNOWN,
-    single_dog_household=False,
-    suitable_for_fulltime_workers=Tribool.UNKNOWN,
-    behaviour_training_needed=False,
-    experienced_dog_owners_needed=False,
-    can_live_with_children="any",
-    medical_needs=False,
-    calm_home_needed=False
-  )
+  dog_filters = DogFilters()
   
   for metadata in tags:
     match metadata:
