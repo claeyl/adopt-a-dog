@@ -12,7 +12,7 @@ OVERFETCH_LIMIT = 20
 RESULT_SIZE = 5
 
 # This returns a list of Weaviate's QueryReturn type, but it is not exposed for public use, so type can't be annotated
-def query_collection(query: str):
+def query_collection(query: str, top_k: int = RESULT_SIZE):
   load_dotenv()
   cohere_key = os.getenv("COHERE_API_KEY")
   if not cohere_key:
