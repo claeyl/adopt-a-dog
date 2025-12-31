@@ -1,4 +1,4 @@
-export interface DogResponse {
+export interface DogInfoResponse {
   id: number
   name: string
   gender: string
@@ -6,7 +6,8 @@ export interface DogResponse {
   breed: string
   size: string
   weight: number
-  adoption_fee: number
+  adoptionFee: number
   tags: string[]
   description: string
+  explanation: string
 }
