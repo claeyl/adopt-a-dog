@@ -39,7 +39,7 @@ const handleSearch = async () => {
     dogs.value = await findDogs(currentQuery.value)
     sessionStorage.setItem('dogs', JSON.stringify(dogs.value))
     sessionStorage.setItem('query', currentQuery.value)
-  } catch (err) {
+  } catch {
     error.value = 'InternalServerError'
   } finally {
     loading.value = false
