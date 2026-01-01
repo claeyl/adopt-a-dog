@@ -1,89 +1,46 @@
-:root {
-  /* colors */
-  --clr-offwhite: hsl(30, 25%, 92.16%);
-  --clr-black: hsl(30, 14.29%, 5.49%);
-  --clr-darkgrey: hsl(0, 0%, 15%);
+@import 'tailwindcss';
 
-  --clr-orange: hsl(15, 58%, 47%);
-  --clr-green: hsl(164.17, 45.57%, 30.98%);
-  --clr-blue: hsl(225.6, 100%, 75.49%);
-  --clr-darkblue: hsl(229, 57%, 50%);
-  --clr-purple: hsl(272, 48%, 47%);
-  --clr-pink: hsl(338.18, 52.38%, 41.18%);
+@theme {
+  --color-*: initial;
+  --color-light: #f8f4f2;
+  --color-dark: #100e0c;
 
-  --clr-light: var(--clr-offwhite);
-  --clr-dark: var(--clr-black);
-  --clr-primary: var(--clr-blue);
-  --clr-font: var(--clr-offwhite);
+  --color-surface-0: var(--color-dark);
+  --color-surface-10: #1c1c22;
+  --color-surface-20: #313137;
+  --color-surface-30: #47474c;
+  --color-surface-40: #5f5f63;
+  --color-surface-50: #77777b;
+  --color-surface-60: #919194;
+  --color-surface-70: #ababae;
 
-  /* spacing */
-  --space-base: 0.5rem;
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-6: 3rem;
-  --space-8: 4rem;
+  --color-orange: #f06c41;
+  --color-green: #0c9973;
+  --color-blue: #82a0ff;
+  --color-darkblue: #4362ef;
+  --color-purple: #9842e2;
+  --color-pink: #c6396c;
 
-  /* border radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 12px;
-  --radius-pill: 9999px;
-  --radius-circle: 50%;
+  --color-primary: var(--color-blue);
+  --color-danger: #9c2121;
 
-  /* font */
   --font-main: 'Quicksand', system-ui, -apple-system, sans-serif;
-  --font-base: 1rem;
-  --font-p-lg: 1.1rem;
-  --font-display-sm: 1.25rem;
-  --font-display-lg: 3.25rem;
 }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  body {
+    background-color: var(--color-surface-0);
+    color: var(--color-light);
+    font-family: var(--font-main);
+  }
+  button {
+    cursor: pointer;
+  }
 }
+@utility transition-brightness {
+  transition: filter 100ms ease-in;
 
-body {
-  font-family: var(--font-main);
-  line-height: 1.5;
-  color: var(--clr-font);
-  background-color: var(--clr-dark);
-  background-image:
-    radial-gradient(ellipse 200% 150% at 50% 100%, var(--clr-dark), transparent),
-    linear-gradient(transparent 0%, transparent 9.5%, var(--clr-dark) 60%),
-    linear-gradient(rgba(15, 13, 11, 0.65), rgba(15, 13, 11, 0.65)),
-    linear-gradient(to right, var(--clr-orange), var(--clr-green), var(--clr-purple));
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  overflow-wrap: break-word;
-}
-
-p {
-  text-wrap: balance;
-}
-
-input,
-button,
-textarea {
-  font: inherit;
-}
-
-#app {
-  width: 100vw;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding-block: var(--space-4);
+  &:hover {
+    filter: brightness(0.85);
+  }
 }
