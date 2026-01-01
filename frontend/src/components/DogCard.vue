@@ -1,111 +1,129 @@
-<template>
-  <section class="card">
-    <div class="card__header">
-      <h2><TypewriterText :content="dog.name" /></h2>
-      <a :href="`https://www.dogshome.org.au/our-dogs/${dog.id}`" target="_blank"
-        ><span>Learn more</span><i class="pi pi-external-link" style="margin: 0"></i
-      ></a>
-      <p><span class="card__header-label">gender: </span>{{ dog.gender }}</p>
-      <p><span class="card__header-label">age: </span>{{ formatAge(dog.age) }}</p>
-      <p><span class="card__header-label">breed: </span>{{ dog.breed }}</p>
-      <p><span class="card__header-label">size: </span>{{ dog.size }}</p>
-      <p><span class="card__header-label">adoption fee: </span>AUD $ {{ dog.adoption_fee }}</p>
-    </div>
-    <div class="card__tags">
-      <span v-for="tag in dog.tags" :key="tag" class="card__tag">
-        {{ tag }}
-      </span>
-    </div>
-    <div class="card__footer">
-      <p>{{ dog.description }}</p>
-    </div>
-  </section>
-</template>
-
 <script setup lang="ts">
-import type { DogResponse } from '@/types/DogResponse'
-import TypewriterText from './TypewriterText.vue'
+import { Calendar, CircleDollarSign, DogIcon, Ruler, Sparkles, Weight } from 'lucide-vue-next'
+import type { DogInfoResponse } from '@/types/DogInfoResponse'
+import TypewriterText from './ui/TypewriterText.vue'
+
 const props = defineProps<{
-  dog: DogResponse
+  index: number
+  dog: DogInfoResponse
 }>()
 
-function formatAge(age: number): string {
-  if (age < 1) {
-    return '< 1 years'
-  } else if (age === 1) {
-    return '1 year'
-  } else {
-    return age + ' years'
-  }
+const formatAge = (age: number) => {
+  if (age < 1) return '< 1 Year'
+  if (age === 1) return '1 Year'
+  return `${age} Years`
 }
-</script>
 
+const dogStats = [
+  {
+    icon: Calendar,
+    value: formatAge(props.dog.age),
+  },
+  {
+    icon: Weight,
+    value: props.dog.weight === 0 ? 'N/A' : `${props.dog.weight}kg`,
+  },
+  {
+    icon: Ruler,
+    value: props.dog.size,
+  },
+  {
+    icon: CircleDollarSign,
+    value: `AUD ${props.dog.adoptionFee}`,
+  },
+]
+</script>
+<template>
+  <div
+    class="bg-surface-10 border border-surface-20 rounded-xl transition-all duration-300 overflow-hidden animate-fade-in-up card"
+    :style="{ animationDelay: `${index * 100}ms` }"
+  >
+    <!-- Header -->
+    <header class="border-b border-surface-30 flex justify-between items-center p-6">
+      <div class="flex gap-2 items-center">
+        <div class="grid place-items-center bg-green w-12 h-12 rounded-xl">
+          <DogIcon :size="28" />
+        </div>
+        <div>
+          <h3 class="font-semibold text-2xl">
+            <TypewriterText :content="dog.name"></TypewriterText>
+          </h3>
+          <p class="text-sm text-surface-60">{{ dog.breed }}</p>
+        </div>
+      </div>
+      <div
+        class="border-2 rounded-full px-4 py-1 text-sm font-bold capitalize"
+        :class="`${dog.gender === 'female' ? 'border-pink bg-pink/20 text-pink' : 'border-darkblue bg-darkblue/20 text-darkblue'}`"
+      >
+        {{ dog.gender }}
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="flex flex-col p-6 gap-6">
+      <!-- Stats -->
+      <div class="grid grid-cols-2 gap-1 sm:grid-cols-4 place-items-stretch">
+        <div class="flex items-center gap-2" v-for="(stat, index) in dogStats" :key="index">
+          <component color="var(--color-surface-50)" :is="stat.icon" :size="20" />
+          <span class="capitalize">{{ stat.value }}</span>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2">
+        <div
+          class="py-1 px-4 rounded-full bg-surface-30 text-sm"
+          v-for="(tag, index) in dog.tags"
+          :key="index"
+        >
+          {{ tag }}
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="opacity-75 text-base/7">{{ dog.description }}</p>
+
+      <!-- Generated Explanation -->
+      <div class="border border-primary/12 p-4 rounded-xl bg-primary/13">
+        <strong class="flex items-center gap-2 mb-4"
+          ><Sparkles color="var(--color-primary)" /><span
+            >Why {{ dog.name }} might be perfect for you</span
+          ></strong
+        >
+        <p class="text-base/7">{{ dog.explanation }}</p>
+      </div>
+
+      <!-- CTA -->
+      <a
+        class="w-full bg-primary text-center rounded-xl py-2 cursor-pointer font-semibold text-dark transition-brightness"
+        :href="`https://www.dogshome.org.au/our-dogs/${dog.id}`"
+        target="_blank"
+        >Meet {{ dog.name }}</a
+      >
+    </div>
+  </div>
+</template>
 <style scoped>
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-
-  border-radius: var(--radius-lg);
-  padding: var(--space-2);
-  max-width: 100%;
+  box-shadow: 0 8px 30px -8px hsla(0, 0%, 0%, 0.4);
 }
 
-.card__header {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-items: start;
-  justify-content: space-between;
-  gap: var(--space-1);
+.card:hover {
+  box-shadow: 0 12px 40px 5px hsla(0, 0%, 0%, 0.5);
 }
 
-@media (min-width: 768px) {
-  .card__header {
-    grid-template-columns: repeat(2, max-content);
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.card__header-label {
-  font-weight: 600;
-}
-
-.card__header a {
-  text-decoration: none;
-  background-color: var(--clr-dark);
-  border-radius: var(--radius-md);
-  padding: var(--space-1) var(--space-2);
-  color: var(--clr-font);
-  transition: background-color 0.2s ease;
-
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.card__header a:hover {
-  filter: brightness(85%);
-}
-
-.card__header p {
-  text-transform: capitalize;
-}
-
-.card__tags {
-  display: flex;
-  gap: var(--space-1);
-  flex-wrap: wrap;
-}
-
-.card__tag {
-  background-color: var(--clr-dark);
-  filter: opacity(75%);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-pill);
-}
-
-.card__header,
-.card__footer {
-  color: var(--clr-dark);
-  font-size: var(--font-p-lg);
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
 }
 </style>
