@@ -12,11 +12,11 @@ defineEmits<{
 <template>
   <button
     type="button"
-    class="font-medium text-balance rounded-full py-2 px-4 border-2 border-transparent border-transition brightness-transition"
+    class="font-medium text-balance rounded-full py-2 px-4 border-2 border-transparent border-transition transition-brightness"
     :style="{ backgroundColor: color }"
     @click="$emit('click', content)"
   >
-    <span>{{ content }}</span>
+    <span class="select-all">{{ content }}</span>
   </button>
 </template>
 
