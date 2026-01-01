@@ -18,7 +18,15 @@ export default defineConfigWithVueTs(
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
   pluginVue.configs['flat/essential'],
+
   vueTsConfigs.recommended,
+  {
+    name: 'disable-single-word-component-rule',
+    files: ['**/*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 
   {
     ...pluginVitest.configs.recommended,

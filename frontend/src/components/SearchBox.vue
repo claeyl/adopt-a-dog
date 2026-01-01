@@ -46,7 +46,7 @@ const MINIMUM_QUERY_LENGTH = 3
 const MAXIMUM_QUERY_LENGTH = 300
 const ASCII_PRINTABLE_REGEX = /[^\x20-\x7E\n\r\t]/g
 
-const props = defineProps<{
+defineProps<{
   disabled: boolean
 }>()
 
