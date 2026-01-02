@@ -29,6 +29,8 @@ onMounted(() => {
 })
 
 const handleSearch = async () => {
+  const currentQueryValue = currentQuery.value
+
   loading.value = true
   hasSearched.value = true
   dogs.value = []
@@ -37,7 +39,7 @@ const handleSearch = async () => {
   currentQuery.value = ''
 
   try {
-    dogs.value = await findDogs(currentQuery.value)
+    dogs.value = await findDogs(currentQueryValue)
     sessionStorage.setItem('dogs', JSON.stringify(dogs.value))
     sessionStorage.setItem('query', currentQuery.value)
   } catch (err) {
