@@ -1,7 +1,7 @@
 # Note this deletes the data as well as the schema definition
 
-import weaviate
+from backend.services.db_client import create_db_client
 
-client = weaviate.connect_to_local()
+client = create_db_client()
 client.collections.delete("Dog")
 client.close()
