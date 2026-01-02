@@ -38,7 +38,7 @@ const formatNumOfMatches = computed(() => {
   <!-- else if there are matching dogs -->
   <div v-else-if="dogs.length > 0" class="flex flex-col gap-4">
     <div class="flex flex-col gap-1">
-      <h2 class="text-semibold">Found {{ formatNumOfMatches }}</h2>
+      <h2 class="font-extrabold text-2xl brightness-85">Found {{ formatNumOfMatches }}</h2>
       <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2">{{ query }}</p>
     </div>
     <div class="flex flex-col gap-6">

@@ -10,6 +10,7 @@ class DogInfoResponse(BaseModel):
   
   id: int
   name: str
+  image_url: str
   gender: str
   age: float
   breed: str

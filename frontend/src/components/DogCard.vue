@@ -2,6 +2,7 @@
 import { Calendar, CircleDollarSign, DogIcon, Ruler, Sparkles, Weight } from 'lucide-vue-next'
 import type { DogInfoResponse } from '@/types/DogInfoResponse'
 import TypewriterText from './ui/TypewriterText.vue'
+import { ref } from 'vue'
 
 const props = defineProps<{
   index: number
@@ -13,6 +14,8 @@ const formatAge = (age: number) => {
   if (age === 1) return '1 Year'
   return `${age} Years`
 }
+
+const imageUrlError = ref(false)
 
 const dogStats = [
   {
@@ -39,20 +42,29 @@ const dogStats = [
     :style="{ animationDelay: `${index * 100}ms` }"
   >
     <!-- Header -->
-    <header class="border-b border-surface-30 flex justify-between items-center p-6">
-      <div class="flex gap-2 items-center">
-        <div class="grid place-items-center bg-green w-12 h-12 rounded-xl">
-          <DogIcon :size="28" />
+    <header class="border-b border-surface-30 flex justify-between items-center p-6 gap-4">
+      <div class="flex gap-4 items-center">
+        <div
+          class="grid place-items-center bg-green w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-xl"
+        >
+          <img
+            v-if="dog.imageUrl.length > 0 && !imageUrlError"
+            class="aspect-square max-w-full rounded-xl object-cover"
+            :src="dog.imageUrl"
+            :alt="`photo of ${dog.name}`"
+            @error="imageUrlError = true"
+          />
+          <DogIcon v-else :size="40" :stroke-width="1.75" />
         </div>
         <div>
-          <h3 class="font-semibold text-2xl">
+          <h3 class="font-semibold text-2xl sm:mb-2">
             <TypewriterText :content="dog.name"></TypewriterText>
           </h3>
-          <p class="text-sm text-surface-60">{{ dog.breed }}</p>
+          <p class="text-surface-60 capitalize text-balance">{{ dog.breed }}</p>
         </div>
       </div>
       <div
-        class="border-2 rounded-full px-4 py-1 text-sm font-bold capitalize"
+        class="border-2 rounded-full px-4 py-1 font-bold capitalize"
         :class="`${dog.gender === 'female' ? 'border-pink bg-pink/20 text-pink' : 'border-darkblue bg-darkblue/20 text-darkblue'}`"
       >
         {{ dog.gender }}

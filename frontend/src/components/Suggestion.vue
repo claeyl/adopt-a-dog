@@ -16,7 +16,7 @@ defineEmits<{
     :style="{ backgroundColor: color }"
     @click="$emit('click', content)"
   >
-    <span class="select-all">{{ content }}</span>
+    <span>{{ content }}</span>
   </button>
 </template>
 
