@@ -7,6 +7,7 @@ from backend.models.types import Gender, Size
 class Dog:
   id: int
   name: str
+  image_url: str
   gender: Gender
   age: float
   breed: str
