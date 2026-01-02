@@ -2,13 +2,16 @@ import logging
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from backend.models.Dog import Dog
+from backend.models.dtos.DogInfoResponse import DogInfoResponse
 from backend.models.dtos.QueryRequest import QueryRequest
-from backend.models.dtos.DogResponseInfo import DogResponseInfo
 from backend.models.dtos.QueryResponse import QueryResponse
+from backend.services.explanation_service import explain_relevance
+from backend.services.intent_service.intent_service import query_related_to_adoption
 from backend.services.query_service import query_collection
 
 logging.basicConfig(
-  level=logging.INFO,
+  level=logging.DEBUG,
   format="%(asctime)s [%(levelname)s]: %(name)s - %(message)s",
   datefmt="%Y-%m-%d %H:%M:%S",
 )
@@ -31,28 +34,39 @@ app.add_middleware(
 @app.post("/query")
 def query_dog_collection(request: QueryRequest) -> QueryResponse:
   try:
-    response = query_collection(request.query)
+    query = request.query
+    # first check if query is related to adopting a dog
+    query_is_related = query_related_to_adoption(query)
+    if not query_is_related:
+      raise HTTPException(status_code=400, detail="Query is not related to dog adoption.")
+    
+    logger.debug(f"user query: {query}")
+    response = query_collection(query)
 
-    results = []
-    if not response.objects:
+    if not response:
       raise HTTPException(status_code=404, detail="No matching dogs found.")
-    for obj in response.objects:
+    
+    results = []
+    for obj in response:
+      dog_id = obj.properties.get("dog_id")
+      logger.debug(
+        f"{obj.properties.get('name')} (ID: {dog_id}) "
+        f"has a rerank score of {obj.metadata.rerank_score}"
+      )
+      
+      dog = Dog.from_weaviate(dog_id=dog_id, props=obj.properties)  # type: ignore
       results.append(
-        DogResponseInfo(
-        id=obj.properties.get("dog_id"),                  # type: ignore
-        name=obj.properties.get("name"),                  # type: ignore
-        gender=obj.properties.get("gender"),              # type: ignore
-        age=obj.properties.get("age"),                    # type: ignore
-        breed=obj.properties.get("breed"),                # type: ignore
-        size=obj.properties.get("size"),                  # type: ignore
-        weight=obj.properties.get("weight"),              # type: ignore
-        adoption_fee=obj.properties.get("adoption_fee"),  # type: ignore
-        tags=obj.properties.get("tags"),                  # type: ignore
-        description=obj.properties.get("description"),    # type: ignore
+        DogInfoResponse(
+        id=dog_id,                                                  # type: ignore
+        **obj.properties,                                           # type: ignore
+        explanation=explain_relevance(dog, query)                   # TODO: optimise this - currently call is sequential
       ))
     return QueryResponse(results=results)
+  except HTTPException:
+    raise
   except Exception as e:
-    raise HTTPException(status_code=500, detail=str(e))
+    logger.error(f"Error processing query: {str(e)}", exc_info=True)
+    raise HTTPException(status_code=500, detail="Something went wrong, please try again")
 
 @app.get("/")
 def read_root():
