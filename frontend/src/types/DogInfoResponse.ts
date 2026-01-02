@@ -1,6 +1,7 @@
 export interface DogInfoResponse {
   id: number
   name: string
+  imageUrl: string
   gender: string
   age: number
   breed: string

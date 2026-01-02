@@ -34,6 +34,7 @@ const handleSearch = async () => {
   dogs.value = []
   error.value = undefined
   previousQuery.value = currentQuery.value
+  currentQuery.value = ''
 
   try {
     dogs.value = await findDogs(currentQuery.value)
