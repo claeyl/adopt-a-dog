@@ -39,8 +39,8 @@ const handleSearch = async () => {
     dogs.value = await findDogs(currentQuery.value)
     sessionStorage.setItem('dogs', JSON.stringify(dogs.value))
     sessionStorage.setItem('query', currentQuery.value)
-  } catch {
-    error.value = 'InternalServerError'
+  } catch (err) {
+    error.value = (err as HttpError) || 'InternalServerError'
   } finally {
     loading.value = false
   }
@@ -65,7 +65,7 @@ const handleSuggestionClick = (content: string) => {
     <Header @new-search="reset"></Header>
 
     <main class="flex flex-col gap-6 sm:w-[70%] lg:w-[45%] xl:w-[40%] w-[90%] mt-15 py-8">
-      <div class="text-center" v-if="!hasSearched">
+      <div class="text-center" v-if="dogs.length === 0">
         <h1 class="text-5xl font-bold mb-5 select-none">
           <span class="text-primary">adopt</span> a dog
         </h1>
@@ -76,7 +76,7 @@ const handleSuggestionClick = (content: string) => {
       </div>
 
       <SearchBox v-model:query="currentQuery" :disabled="loading" @search="handleSearch" />
-      <Suggestions v-if="!hasSearched" @suggestion-click="handleSuggestionClick" />
+      <Suggestions v-if="dogs.length === 0" @suggestion-click="handleSuggestionClick" />
       <SearchResultsDisplay :dogs="dogs" :loading="loading" :error="error" :query="previousQuery" />
     </main>
   </div>
