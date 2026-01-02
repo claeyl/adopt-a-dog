@@ -1,22 +1,17 @@
-import os
-import weaviate
+import logging
 
-from dotenv import load_dotenv
 from backend.populate_db.constants import ALL_DOGS_PAGE_URL_PREFIX
 from backend.populate_db.extract_data import get_full_dog_info
 from backend.populate_db.scrape_data import scrape_available_dog_ids
+from backend.services.db_client import create_db_client
+
+logger = logging.getLogger(__name__)
 
 BATCH_SIZE = 200
 ERROR_SIZE = 10
 
 try:
-  load_dotenv()
-  cohere_key = os.getenv("COHERE_API_KEY")
-  if not cohere_key:
-    raise Exception("Cohere key does not exist")
-  
-  headers = { "X-Cohere-Api-Key": cohere_key }
-  client = weaviate.connect_to_local(headers=headers)
+  client = create_db_client()
   dogs = client.collections.use("Dog")
 
   with dogs.batch.fixed_size(batch_size=BATCH_SIZE) as batch:
@@ -28,6 +23,7 @@ try:
         dog_obj = {
           "dog_id": dog.id,
           "name": dog.name,
+          "image_url": dog.image_url,
           "gender": dog.gender,
           "age": dog.age,
           "breed": dog.breed,
@@ -56,6 +52,6 @@ try:
     raise Exception(f"Failed to import {len(dogs.batch.failed_objects)} objects")
 
 except Exception as err:
-  print(f"Error: {err}")
+  logger.exception(err)
 finally:
   client.close()

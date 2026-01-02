@@ -1,8 +1,6 @@
-import os
 import logging
-import weaviate
 
-from dotenv import load_dotenv
+from backend.services.db_client import create_db_client
 from weaviate.classes.query import Rerank, MetadataQuery
 from backend.services.filter_service import build_filter_expression, construct_json_filters_from_prompt
 
@@ -13,13 +11,7 @@ RESULT_SIZE = 5
 
 # This returns a list of Weaviate's QueryReturn type, but it is not exposed for public use, so type can't be annotated
 def query_collection(query: str, top_k: int = RESULT_SIZE):
-  load_dotenv()
-  cohere_key = os.getenv("COHERE_API_KEY")
-  if not cohere_key:
-    raise Exception("Cohere key does not exist")
-  
-  headers = { "X-Cohere-Api-Key": cohere_key }
-  client = weaviate.connect_to_local(headers=headers) # TODO: eventually change this to connect_to_weaviate_cloud
+  client = create_db_client()
   
   try:
     dogs = client.collections.use("Dog")

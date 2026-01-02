@@ -1,6 +1,4 @@
-import os
-import weaviate
-from dotenv import load_dotenv
+from backend.services.db_client import create_db_client
 from weaviate.classes.config import (
   Configure,
   DataType,
@@ -9,18 +7,13 @@ from weaviate.classes.config import (
 )
 
 try:
-  load_dotenv()
-  cohere_key = os.getenv("COHERE_API_KEY")
-  
-  if not cohere_key:
-    raise Exception("Cohere key does not exist")
-  
-  headers = { "X-Cohere-Api-Key": cohere_key }
-  client = weaviate.connect_to_local()
+  client = create_db_client()
   
   dogs = client.collections.create(
   name="Dog",
   description="Collection of dogs available for adoption",
+  
+  # Paused till I'm not rate limited by Cohere...
   # vector_config=Configure.Vectors.text2vec_cohere(source_properties=["tags", "description"]),
   # reranker_config=Configure.Reranker.cohere(),
   vector_config=Configure.Vectors.text2vec_transformers(source_properties=["tags", "description"]),
