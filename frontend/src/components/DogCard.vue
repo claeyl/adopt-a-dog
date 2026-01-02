@@ -2,6 +2,7 @@
 import { Calendar, CircleDollarSign, DogIcon, Ruler, Sparkles, Weight } from 'lucide-vue-next'
 import type { DogInfoResponse } from '@/types/DogInfoResponse'
 import TypewriterText from './ui/TypewriterText.vue'
+import { ref } from 'vue'
 
 const props = defineProps<{
   index: number
@@ -13,6 +14,8 @@ const formatAge = (age: number) => {
   if (age === 1) return '1 Year'
   return `${age} Years`
 }
+
+const imageUrlError = ref(false)
 
 const dogStats = [
   {
@@ -44,12 +47,14 @@ const dogStats = [
         <div
           class="grid place-items-center bg-green w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-xl"
         >
-          <DogIcon :size="40" :stroke-width="1.75" />
-          <!-- <img
+          <img
+            v-if="dog.imageUrl.length > 0 && !imageUrlError"
             class="aspect-square max-w-full rounded-xl object-cover"
-            src="https://www.dogshome.org.au/wp-content/uploads/2025/12/53d4874356c947278eac1151982e839a-1766294517-1766300321-jpg.jpg"
-            alt="dog photo"
-          /> -->
+            :src="dog.imageUrl"
+            :alt="`photo of ${dog.name}`"
+            @error="imageUrlError = true"
+          />
+          <DogIcon v-else :size="40" :stroke-width="1.75" />
         </div>
         <div>
           <h3 class="font-semibold text-2xl sm:mb-2">
