@@ -17,6 +17,14 @@ from backend.populate_db.format_data import (
 )
 
 
+def get_dog_image_url(image_element: Tag) -> str:
+
+  first_available_image = image_element.find("img")
+  if not first_available_image:
+    return ""
+  return str(first_available_image["src"])
+
+
 def parse_basic_dog_info(raw_text: str) -> tuple[int, str, Gender, int, str, Size, float, float]:
   name, id, _, gender, age, breed, size_and_weight, _, fee, _, _, _ = raw_text.split("\n")
 
@@ -83,7 +91,13 @@ def get_full_dog_info(id: int) -> Optional[Dog]:
   if response is None:
     return None
   
-  dog_content_element, dog_tag_element, dog_description_element = response
+  dog_image_element, dog_content_element, dog_tag_element, dog_description_element = response
+  
+  # Parse dog image
+  if dog_image_element:
+    image_url = get_dog_image_url(dog_image_element)
+  else:
+    image_url = ""
   
   # Parse basic info for a dog
   dog_content_text = dog_content_element.get_text(separator="\n", strip=True)
@@ -104,6 +118,7 @@ def get_full_dog_info(id: int) -> Optional[Dog]:
     Dog(
         id=id,
         name=name,
+        image_url=image_url,
         gender=gender,
         age=age,
         breed=breed,
