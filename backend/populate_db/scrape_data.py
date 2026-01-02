@@ -2,7 +2,6 @@ import requests
 
 from typing import List, Optional, Tuple
 from bs4 import BeautifulSoup, ResultSet, Tag
-from backend.models.Dog import Dog
 from backend.populate_db.constants import INDIVIDUAL_DOG_PAGE_URL_PREFIX
 
 
@@ -33,7 +32,7 @@ def scrape_available_dog_ids(url: str) -> List[int]:
   return dog_ids
 
 
-def scrape_full_dog_info(id: int) -> Optional[Tuple[Tag, ResultSet[Tag], ResultSet[Tag]]]:
+def scrape_full_dog_info(id: int) -> Optional[Tuple[Optional[Tag], Tag, ResultSet[Tag], ResultSet[Tag]]]:
   response = requests.get(f"{INDIVIDUAL_DOG_PAGE_URL_PREFIX}/{id}")
   soup = BeautifulSoup(response.content, "html.parser")
   
@@ -42,12 +41,14 @@ def scrape_full_dog_info(id: int) -> Optional[Tuple[Tag, ResultSet[Tag], ResultS
     return None
   
   """
-  In the page, a dog's info is divided up into 3 parts that are relevant:
+  In the page, a dog's info is divided up into 4 parts that are relevant:
+  A 'image' section that contains a dog's photo
   A 'content' section that has basic information such as a dog's name, age, weight, size, etc.
   A 'tags' section that has tags about a dog's character, 
     such as their friendliness towards other dogs, whether they have medical needs, if they can live with children etc.
   A 'description' section that has a more in depth paragraph(s) explanation of a dog
   """
+  dog_image_element = dog_info.select_one(".imgWrap")
   dog_content_element = dog_info.select_one(".contWrap .dogDetailsWrap")
   dog_tags_element = dog_info.select(".contWrap .dogDetailsWrap .dogDetail.fullDetails.dogicons img")
   dog_description_element = dog_info.select(".contWrap .dogContent p")
@@ -55,4 +56,4 @@ def scrape_full_dog_info(id: int) -> Optional[Tuple[Tag, ResultSet[Tag], ResultS
   if not dog_content_element:
     return None
   
-  return dog_content_element, dog_tags_element, dog_description_element
+  return dog_image_element, dog_content_element, dog_tags_element, dog_description_element
