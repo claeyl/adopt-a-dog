@@ -2,13 +2,13 @@ import logging
 import os
 import re
 
-from backend.models.Dog import Dog
+from models.Dog import Dog
 from dotenv import load_dotenv
-from huggingface_hub import InferenceClient, InferenceEndpointError, InferenceTimeoutError
+from huggingface_hub import AsyncInferenceClient, InferenceEndpointError, InferenceTimeoutError
 
 logger = logging.getLogger(__name__)
 
-def explain_relevance(dog: Dog, query: str) -> str:
+async def explain_relevance(dog: Dog, query: str) -> str:
   load_dotenv()
   hugging_face_key = os.getenv("HUGGING_FACE_API_KEY")
   if not hugging_face_key:
@@ -30,7 +30,7 @@ def explain_relevance(dog: Dog, query: str) -> str:
   - Don't repeat the person's query verbatim - paraphrase the needs when connecting them
   """
   
-  client = InferenceClient(
+  client = AsyncInferenceClient(
     provider="cerebras",
     api_key=hugging_face_key,
     timeout=30
@@ -40,7 +40,7 @@ def explain_relevance(dog: Dog, query: str) -> str:
   
   content = ""
   try:
-    response = client.chat_completion(
+    response = await client.chat_completion(
       messages=messages,
       model="Qwen/Qwen3-32B",
     )
