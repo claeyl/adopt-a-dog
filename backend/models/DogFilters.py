@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from backend.models.types import Children, Tribool
+from models.types import Children, Tribool
 
 @dataclass
 class DogFilters:

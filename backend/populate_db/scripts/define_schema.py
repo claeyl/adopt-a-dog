@@ -1,4 +1,4 @@
-from backend.services.db_client import create_db_client
+from services.db_client import create_db_client
 from weaviate.classes.config import (
   Configure,
   DataType,

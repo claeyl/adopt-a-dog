@@ -1,6 +1,6 @@
 import re
 
-from backend.models.types import Gender, Size
+from models.types import Gender, Size
 
 
 def format_id(raw: str) -> int:

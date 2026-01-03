@@ -1,9 +1,9 @@
 import logging
 
-from backend.populate_db.constants import ALL_DOGS_PAGE_URL_PREFIX
-from backend.populate_db.extract_data import get_full_dog_info
-from backend.populate_db.scrape_data import scrape_available_dog_ids
-from backend.services.db_client import create_db_client
+from populate_db.constants import ALL_DOGS_PAGE_URL_PREFIX
+from populate_db.extract_data import get_full_dog_info
+from populate_db.scrape_data import scrape_available_dog_ids
+from services.db_client import create_db_client
 
 logger = logging.getLogger(__name__)
 

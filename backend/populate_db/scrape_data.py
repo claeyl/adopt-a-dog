@@ -2,7 +2,7 @@ import requests
 
 from typing import List, Optional, Tuple
 from bs4 import BeautifulSoup, ResultSet, Tag
-from backend.populate_db.constants import INDIVIDUAL_DOG_PAGE_URL_PREFIX
+from populate_db.constants import INDIVIDUAL_DOG_PAGE_URL_PREFIX
 
 
 def scrape_available_dog_ids(url: str) -> List[int]:

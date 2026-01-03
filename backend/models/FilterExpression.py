@@ -1,6 +1,6 @@
 from typing import List, Literal, Optional
 from pydantic import BaseModel
-from backend.models.types import ComparisonOperator
+from models.types import ComparisonOperator
 
 
 class FilterCondition(BaseModel):

@@ -1,4 +1,4 @@
-from backend.models.dtos.DogInfoResponse import DogInfoResponse
+from models.dtos.DogInfoResponse import DogInfoResponse
 from typing import List
 from pydantic import BaseModel
 

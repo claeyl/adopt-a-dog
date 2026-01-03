@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
-from backend.models.DogFilters import DogFilters
-from backend.models.types import Gender, Size
+from models.DogFilters import DogFilters
+from models.types import Gender, Size
 
 @dataclass
 class Dog:

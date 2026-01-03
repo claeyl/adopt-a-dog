@@ -2,8 +2,8 @@ import json
 import logging
 import os
 
-from backend.models.FilterExpression import FilterCondition, FilterExpression, FilterConstructionError
-from backend.models.types import LogicalOperator
+from models.FilterExpression import FilterCondition, FilterExpression, FilterConstructionError
+from models.types import LogicalOperator
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient, InferenceEndpointError, InferenceTimeoutError
 from pydantic import ValidationError

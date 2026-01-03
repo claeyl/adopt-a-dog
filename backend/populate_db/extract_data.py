@@ -1,11 +1,11 @@
 from typing import List, Optional
 
 from bs4 import ResultSet, Tag
-from backend.models.DogFilters import DogFilters
-from backend.models.Dog import Dog
-from backend.models.types import Gender, Size, Tribool
-from backend.populate_db.scrape_data import scrape_full_dog_info
-from backend.populate_db.format_data import (
+from models.DogFilters import DogFilters
+from models.Dog import Dog
+from models.types import Gender, Size, Tribool
+from populate_db.scrape_data import scrape_full_dog_info
+from populate_db.format_data import (
   format_id,
   format_gender,
   format_age,

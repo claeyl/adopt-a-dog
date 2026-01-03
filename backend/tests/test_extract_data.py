@@ -1,6 +1,6 @@
 import unittest
 
-from backend.populate_db.extract_data import parse_basic_dog_info
+from populate_db.extract_data import parse_basic_dog_info
 
 class TestParseBasicDogInfo(unittest.TestCase):
   def test_complete_info(self):

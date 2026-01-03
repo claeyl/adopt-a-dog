@@ -1,8 +1,8 @@
 import logging
 
-from backend.services.db_client import create_db_client
+from services.db_client import create_db_client
 from weaviate.classes.query import Rerank, MetadataQuery
-from backend.services.filter_service import build_filter_expression, construct_json_filters_from_prompt
+from services.filter_service import build_filter_expression, construct_json_filters_from_prompt
 
 logger = logging.getLogger(__name__)
 
