@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue'
-import SearchBox from '@/components/SearchBox.vue'
 import SearchResultsDisplay from '@/components/SearchResultsDisplay.vue'
 import Suggestions from '@/components/Suggestions.vue'
+import SearchBox from '@/components/SearchBox.vue'
 import { findDogs } from '@/api/findDogs'
 import type { DogInfoResponse } from '@/types/DogInfoResponse'
 import type { HttpError } from '@/types/Error'
