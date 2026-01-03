@@ -22,7 +22,9 @@ const formatNumOfMatches = computed(() => {
   <div v-if="loading" class="flex flex-col gap-4">
     <div class="flex flex-col gap-1">
       <h2 class="text-semibold">Searching for your perfect matches</h2>
-      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2">{{ query }}</p>
+      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2 whitespace-pre">
+        {{ query }}
+      </p>
     </div>
 
     <div class="flex flex-col gap-6">
@@ -39,7 +41,9 @@ const formatNumOfMatches = computed(() => {
   <div v-else-if="dogs.length > 0" class="flex flex-col gap-4">
     <div class="flex flex-col gap-1">
       <h2 class="font-extrabold text-2xl brightness-85">Found {{ formatNumOfMatches }}</h2>
-      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2">{{ query }}</p>
+      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2 whitespace-pre">
+        {{ query }}
+      </p>
     </div>
     <div class="flex flex-col gap-6">
       <DogCard v-for="(dog, index) in dogs" :key="index" :index="index" :dog="dog" />
