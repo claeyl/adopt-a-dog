@@ -37,9 +37,10 @@ async def query_dog_collection(request: QueryRequest) -> QueryResponse:
   try:
     query = request.query
     # first check if query is related to adopting a dog
-    query_is_related = query_related_to_adoption(query)
-    if not query_is_related:
-      raise HTTPException(status_code=400, detail="Query is not related to dog adoption.")
+    # TODO: figure out how to host binary clasifier because Git does not allow large files
+    # query_is_related = query_related_to_adoption(query)
+    # if not query_is_related:
+    #   raise HTTPException(status_code=400, detail="Query is not related to dog adoption.")
     
     logger.debug(f"user query: {query}")
     response = query_collection(query)
