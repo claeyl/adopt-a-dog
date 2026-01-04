@@ -41,7 +41,7 @@ const handleSearch = async () => {
   try {
     dogs.value = await findDogs(currentQueryValue)
     sessionStorage.setItem('dogs', JSON.stringify(dogs.value))
-    sessionStorage.setItem('query', currentQuery.value)
+    sessionStorage.setItem('query', currentQueryValue)
   } catch (err) {
     error.value = (err as HttpError) || 'InternalServerError'
   } finally {
