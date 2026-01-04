@@ -48,20 +48,6 @@ async def query_dog_collection(request: QueryRequest) -> QueryResponse:
       raise HTTPException(status_code=404, detail="No matching dogs found.")
     
     results = []
-    # for obj in response:
-    #   dog_id = obj.properties.get("dog_id")
-    #   logger.debug(
-    #     f"{obj.properties.get('name')} (ID: {dog_id}) "
-    #     f"has a rerank score of {obj.metadata.rerank_score}"
-    #   )
-      
-    #   dog = Dog.from_weaviate(dog_id=dog_id, props=obj.properties)  # type: ignore
-    #   results.append(
-    #     DogInfoResponse(
-    #     id=dog_id,                                                  # type: ignore
-    #     **obj.properties,                                           # type: ignore
-    #     explanation=explain_relevance(dog, query)                   # TODO: optimise this - currently call is sequential
-    #   ))
     promises = [_get_dog_info_response(obj, query) for obj in response]
     results = await asyncio.gather(*promises)
     return QueryResponse(results=results)

@@ -13,11 +13,14 @@ try:
   name="Dog",
   description="Collection of dogs available for adoption",
   
-  # Paused till I'm not rate limited by Cohere...
-  # vector_config=Configure.Vectors.text2vec_cohere(source_properties=["tags", "description"]),
-  # reranker_config=Configure.Reranker.cohere(),
-  vector_config=Configure.Vectors.text2vec_transformers(source_properties=["tags", "description"]),
-  reranker_config=Configure.Reranker.transformers(),
+  # Change the following to the provider you want to use
+  vector_config=Configure.Vectors.text2vec_cohere(source_properties=["tags", "description"]),
+  reranker_config=Configure.Reranker.cohere(),
+  
+  # For local, an option is to use t2v transformer and reranker
+  # vector_config=Configure.Vectors.text2vec_transformers(source_properties=["tags", "description"]),
+  # reranker_config=Configure.Reranker.transformers(),
+  
   properties=[
     Property(
       name="dog_id",

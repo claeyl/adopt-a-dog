@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from populate_db.constants import ALL_DOGS_PAGE_URL_PREFIX
 from populate_db.extract_data import get_full_dog_info
@@ -10,48 +11,53 @@ logger = logging.getLogger(__name__)
 BATCH_SIZE = 200
 ERROR_SIZE = 10
 
-try:
-  client = create_db_client()
-  dogs = client.collections.use("Dog")
+def seed_data(new_dog_ids: List[int]):
+  try:
+    client = create_db_client()
+    dogs = client.collections.use("Dog")
 
-  with dogs.batch.fixed_size(batch_size=BATCH_SIZE) as batch:
-    available_dogs = scrape_available_dog_ids(ALL_DOGS_PAGE_URL_PREFIX)
-    for available_dog_id in available_dogs:
-      dog = get_full_dog_info(available_dog_id)
+    with dogs.batch.fixed_size(batch_size=BATCH_SIZE) as batch:
       
-      if dog is not None:
-        dog_obj = {
-          "dog_id": dog.id,
-          "name": dog.name,
-          "image_url": dog.image_url,
-          "gender": dog.gender,
-          "age": dog.age,
-          "breed": dog.breed,
-          "size": dog.size,
-          "weight": dog.weight,
-          "adoption_fee": dog.adoption_fee,
-          "tags": dog.tags,
-          "description": dog.description,
-          "friendly_with_cats": dog.filters.friendly_with_cats.value,
-          "friendly_with_dogs": dog.filters.friendly_with_dogs.value,
-          "single_dog_household": dog.filters.single_dog_household,
-          "suitable_for_fulltime_workers": dog.filters.suitable_for_fulltime_workers.value,
-          "behaviour_training_needed": dog.filters.behaviour_training_needed,
-          "experienced_dog_owners_needed": dog.filters.experienced_dog_owners_needed,
-          "can_live_with_children": dog.filters.can_live_with_children,
-          "medical_needs": dog.filters.medical_needs,
-          "calm_home_needed": dog.filters.calm_home_needed
-        }
-        batch.add_object(properties=dog_obj)
+      for new_dog in new_dog_ids:
+        dog = get_full_dog_info(new_dog)
         
-      if batch.number_errors > ERROR_SIZE:
-        raise Exception("Batch import stopped due to excessive errors.")
+        if dog is not None:
+          dog_obj = {
+            "dog_id": dog.id,
+            "name": dog.name,
+            "image_url": dog.image_url,
+            "gender": dog.gender,
+            "age": dog.age,
+            "breed": dog.breed,
+            "size": dog.size,
+            "weight": dog.weight,
+            "adoption_fee": dog.adoption_fee,
+            "tags": dog.tags,
+            "description": dog.description,
+            "friendly_with_cats": dog.filters.friendly_with_cats.value,
+            "friendly_with_dogs": dog.filters.friendly_with_dogs.value,
+            "single_dog_household": dog.filters.single_dog_household,
+            "suitable_for_fulltime_workers": dog.filters.suitable_for_fulltime_workers.value,
+            "behaviour_training_needed": dog.filters.behaviour_training_needed,
+            "experienced_dog_owners_needed": dog.filters.experienced_dog_owners_needed,
+            "can_live_with_children": dog.filters.can_live_with_children,
+            "medical_needs": dog.filters.medical_needs,
+            "calm_home_needed": dog.filters.calm_home_needed
+          }
+          batch.add_object(properties=dog_obj)
+          
+        if batch.number_errors > ERROR_SIZE:
+          raise Exception("Batch import stopped due to excessive errors.")
+  
+    # Check for failed objects
+    if len(dogs.batch.failed_objects) > 0:
+      raise Exception(f"Failed to import {len(dogs.batch.failed_objects)} objects")
 
-  # Check for failed objects
-  if len(dogs.batch.failed_objects) > 0:
-    raise Exception(f"Failed to import {len(dogs.batch.failed_objects)} objects")
+  except Exception as err:
+    logger.exception(err)
+  finally:
+    client.close()
 
-except Exception as err:
-  logger.exception(err)
-finally:
-  client.close()
+if __name__ == "__main__":
+  available_dogs = scrape_available_dog_ids(ALL_DOGS_PAGE_URL_PREFIX)
+  seed_data(available_dogs)
