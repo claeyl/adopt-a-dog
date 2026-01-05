@@ -1,5 +1,29 @@
 services:
+  frontend:
+    container_name: vue
+    image: vueapp:1.0.0
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+  backend:
+    container_name: fastapi
+    image: fastapiapp:1.0.0
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - weaviate
   weaviate:
+    container_name: weaviate
     command:
       - --host
       - 0.0.0.0
@@ -24,10 +48,12 @@ services:
       ENABLE_MODULES: 'text2vec-transformers,reranker-transformers'
       CLUSTER_HOSTNAME: 'node1'
   t2v-transformers:
+    container_name: transformer
     image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-multi-qa-mpnet-base-cos-v1
     environment:
       ENABLE_CUDA: '0'
   reranker-transformers:
+    container_name: reranker
     image: cr.weaviate.io/semitechnologies/reranker-transformers:cross-encoder-ms-marco-MiniLM-L-6-v2
     environment:
       ENABLE_CUDA: '0'
