@@ -22,7 +22,7 @@ const formatNumOfMatches = computed(() => {
   <div v-if="loading" class="flex flex-col gap-4">
     <div class="flex flex-col gap-1">
       <h2 class="text-semibold">Searching for your perfect matches</h2>
-      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2 whitespace-pre">
+      <p class="query-display">
         {{ query }}
       </p>
     </div>
@@ -41,7 +41,7 @@ const formatNumOfMatches = computed(() => {
   <div v-else-if="dogs.length > 0" class="flex flex-col gap-4">
     <div class="flex flex-col gap-1">
       <h2 class="font-extrabold text-2xl brightness-85">Found {{ formatNumOfMatches }}</h2>
-      <p class="text-sm/6 text-surface-70 border-l-2 border-surface-30 pl-2 whitespace-pre">
+      <p class="query-display">
         {{ query }}
       </p>
     </div>
@@ -50,3 +50,13 @@ const formatNumOfMatches = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.query-display {
+  font-size: var(--text-sm);
+  color: var(--color-surface-70);
+  border-left: solid 2px var(--color-surface-30);
+  padding-left: calc(var(--spacing) * 2);
+  white-space: pre-wrap;
+}
+</style>
