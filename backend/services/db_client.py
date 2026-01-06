@@ -16,16 +16,16 @@ The client will also be closed in the caller function
 def create_db_client() -> WeaviateClient:
   load_dotenv()
   
-  connect_to_local = os.getenv("RUN_LOCAL", "true")
+  environment = os.getenv("ENVIRONMENT", "local")
   model = os.getenv("MODEL", "t2v")
   
-  if connect_to_local == "true":
+  if environment == "local":
     if model == "t2v":
-      return _create_db_client_local_t2v()
+      return _create_db_client_local()
     else:
       return _create_db_client_local_cohere()
   
-  cohere_key = os.getenv("COHERE_API_KEY")
+  cohere_key = os.environ["COHERE_API_KEY"]
   weaviate_url = os.environ["WEAVIATE_CLUSTER_URL"]
   weaviate_key = os.environ["WEAVIATE_API_KEY"]
   
@@ -45,8 +45,7 @@ def create_db_client() -> WeaviateClient:
       "X-Cohere-Api-Key": cohere_key
     }
   )
-  logger.info(f"Connected to weaviate: {client.is_ready()}")
-  client = _create_db_client_local_t2v()
+  logger.info(f"Connected to weaviate cloud: {client.is_ready()}")
   
   return client
 
@@ -59,13 +58,13 @@ def _create_db_client_local_cohere() -> WeaviateClient:
   
   headers = { "X-Cohere-Api-Key": cohere_key }
   client = weaviate.connect_to_local(headers=headers, host="weaviate")
-  logger.info(f"Connected to weaviate: {client.is_ready()}")
+  logger.info(f"Connected to weaviate local: {client.is_ready()}")
   
   return client
 
-# If using local weaviate instance with t2v
-def _create_db_client_local_t2v() -> WeaviateClient:
+# If using local weaviate instance with hugging face transformer + reranker
+def _create_db_client_local() -> WeaviateClient:
   client = weaviate.connect_to_local(host="weaviate")
-  logger.info(f"Connected to weaviate: {client.is_ready()}")
+  logger.info(f"Connected to weaviate local: {client.is_ready()}")
   
   return client

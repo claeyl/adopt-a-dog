@@ -1,6 +1,8 @@
 import asyncio
 import logging
+import os
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models.Dog import Dog
@@ -21,7 +23,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 origins = [
-  "http://localhost:5173",
+  "http://localhost",
 ]
 
 app.add_middleware(
@@ -38,9 +40,12 @@ async def query_dog_collection(request: QueryRequest) -> QueryResponse:
     query = request.query
     # first check if query is related to adopting a dog
     # TODO: figure out how to host binary clasifier because Git does not allow large files
-    # query_is_related = query_related_to_adoption(query)
-    # if not query_is_related:
-    #   raise HTTPException(status_code=400, detail="Query is not related to dog adoption.")
+    load_dotenv()
+    environment = os.getenv("ENVIRONMENT", "local")
+    if environment == "local":
+      query_is_related = query_related_to_adoption(query)
+      if not query_is_related:
+        raise HTTPException(status_code=400, detail="Query is not related to dog adoption.")
     
     logger.debug(f"user query: {query}")
     response = query_collection(query)
