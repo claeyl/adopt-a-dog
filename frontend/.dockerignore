@@ -4,3 +4,4 @@ Dockerfile*
 .dockerignore
 LICENSE
 .vscode
+dist

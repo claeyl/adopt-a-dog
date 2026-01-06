@@ -4,11 +4,12 @@ services:
     image: vueapp:1.0.0
     build:
       context: ./frontend
+      dockerfile: dockerfile.local
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - '5173:5173'
+      - '80:80'
     depends_on:
       - backend
   backend:
@@ -16,8 +17,11 @@ services:
     image: fastapiapp:1.0.0
     build:
       context: ./backend
+      dockerfile: dockerfile.local
     volumes:
       - ./backend:/app
+    env_file:
+      - ./backend/.env.local
     ports:
       - '8000:8000'
     depends_on:

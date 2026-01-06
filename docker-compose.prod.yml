@@ -1,0 +1,22 @@
+services:
+  frontend:
+    container_name: vue
+    image: vueapp:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.prod
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+    restart: unless-stopped
+  backend:
+    container_name: fastapi
+    image: fastapiapp:1.0.0
+    build:
+      context: ./backend
+      dockerfile: dockerfile.prod
+    env_file:
+      - ./backend/.env.production
+    ports:
+      - '8000:8000'
