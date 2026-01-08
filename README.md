@@ -4,9 +4,7 @@ Looking for a dog to adopt? This project is a recommendation service that sugges
 
 ## Demo Video
 
-<video controls width="600">
-  <source src="demo-v1.mp4" type="video/mp4" />
-</video>
+[![Demo](https://raw.githubusercontent.com/claeyl/adopt-a-dog/main/demo-v1.mp4)](https://raw.githubusercontent.com/claeyl/adopt-a-dog/main/demo-v1.mp4)
 
 ## Features
 
