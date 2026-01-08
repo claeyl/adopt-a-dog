@@ -20,15 +20,12 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+load_dotenv()
 app = FastAPI()
-
-origins = [
-  "http://localhost",
-]
 
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=origins,
+  allow_origins=os.getenv("FRONTEND_API_URL", "http://localhost:8000"),
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],
@@ -40,7 +37,6 @@ async def query_dog_collection(request: QueryRequest) -> QueryResponse:
     query = request.query
     # first check if query is related to adopting a dog
     # TODO: figure out how to host binary clasifier because Git does not allow large files
-    load_dotenv()
     environment = os.getenv("ENVIRONMENT", "local")
     if environment == "local":
       query_is_related = query_related_to_adoption(query)
