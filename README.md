@@ -3,8 +3,7 @@
 Looking for a dog to adopt? This project is a recommendation service that suggests dogs available for adoption, based on a user's description for their ideal dog. The data is scraped from the Shenton Dog Refuge Home. Using Cohere, vector embeddings were created for each dog's description to find semantically similar dogs from the natural language query. The frontend was built with Vue and styled using TailwindCSS.
 
 ## Demo Video
-
-![Demo Video](https://github.com/cleayl/adopt-a-dog/blob/main/public/demoV1.mp4)
+https://github.com/user-attachments/assets/a9d9a469-90c8-456e-9315-d2e52d7691b6
 
 ## Features
 
