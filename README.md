@@ -4,7 +4,7 @@ Looking for a dog to adopt? This project is a recommendation service that sugges
 
 ## Demo Video
 
-![Demo](https://github.com/cleayl/adopt-a-dog/blob/main/demoV1.mp4)
+![Demo Video](https://github.com/cleayl/adopt-a-dog/blob/main/public/demoV1.mp4)
 
 ## Features
 
@@ -22,7 +22,7 @@ Looking for a dog to adopt? This project is a recommendation service that sugges
 - Then, we do an initial scan from the vector db to find conceptually similar matches. The retrieved items will go through a reranking process so we can return the top k results.
 - We then use an LLM to summarize why a returned dog matches a user's search.
 
-<img src="diagram.png" width=250 alt="flow chart for query processing" />
+<img src="public/diagram.png" width=250 alt="flow chart for query processing" />
 
 ## Running the project locally
 
